@@ -7,7 +7,6 @@ import React, {
 } from 'react';
 
 import AsyncStorage from '@react-native-community/async-storage';
-import api from 'src/services/api';
 
 interface Product {
   id: string;
@@ -47,11 +46,11 @@ const CartProvider: React.FC = ({ children }) => {
     const productExists = products.find(p => p.id === product.id);
 
     if (productExists) {
-      setProducts(
-        products.map(p =>
-          p.id === product.id ? { ...product, quantity: p.quantity + 1 } : p,
-        ),
+      const productIncremented = products.map(p =>
+        p.id === product.id ? { ...product, quantity: p.quantity + 1 } : p,
       );
+
+      setProducts(productIncremented);
     } else {
       setProducts([...products, { ...product, quantity: 1 }]);
     }
