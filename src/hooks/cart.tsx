@@ -88,11 +88,15 @@ const CartProvider: React.FC = ({ children }) => {
         : product,
     );
 
-    setProducts(newProducts);
+    const nonZeroQuantityProducts = newProducts.filter(product => {
+      return product.quantity > 0;
+    });
+
+    setProducts(nonZeroQuantityProducts);
 
     await AsyncStorage.setItem(
       '@GoMarketPlace:products',
-      JSON.stringify(newProducts),
+      JSON.stringify(nonZeroQuantityProducts),
     );
   },
     [products],
